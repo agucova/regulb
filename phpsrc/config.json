@@ -4,14 +4,13 @@
 
     "database": {
       "servername":"localhost",
-      "username":"mateo",
-      "password":"mateo",
+      "username":"root",
+      "password":"regulque",
       "database":"reguleque",
-      "backup-path":"c:/www/regulb/dbbackup/",
+      "backup-path":"./db-backup/",
       "loglevel":"debug"
     }
 
 
   }
 }
-
