@@ -1,10 +1,7 @@
 FROM php:8-fpm
 
 # Copy composer.lock and composer.json
-COPY composer.lock composer.json /var/www/
-
-# Set working directory
-WORKDIR /var/www
+COPY src/composer.lock src/composer.json /var/www/
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
@@ -20,23 +17,27 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     nano
+
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install extensions
-RUN docker-php-ext-install pdo_mysql exif pcntl
+RUN docker-php-ext-install pdo_mysql mysqli exif pcntl bcmath
 RUN docker-php-ext-configure gd --with-freetype=usr/include/ --with-jpeg=/usr/include/
 RUN docker-php-ext-install gd
+
+# Set working directory
+WORKDIR /var/www
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Add user for laravel application
+# Add user for application
 RUN groupadd -g 1000 www
 RUN useradd -u 1000 -ms /bin/bash -g www www
 
 # Copy existing application directory contents
-COPY phpsrc/ /var/www
+COPY ./src /var/www
 
 # Copy existing application directory permissions
 COPY --chown=www:www . /var/www

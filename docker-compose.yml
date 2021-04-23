@@ -13,7 +13,7 @@ services:
             SERVICE_TAGS: dev
         working_dir: /var/www
         volumes:
-            - ./phpsrc:/var/www
+            - ./src:/var/www
             - ./infra/php/local.ini:/usr/local/etc/php/conf.d/local.ini
         networks:
             - app-network
@@ -24,7 +24,7 @@ services:
         restart: unless-stopped
         tty: true
         volumes:
-            - ./phpsrc:/var/www
+            - ./src:/var/www
             - ./infra/nginx/conf.d/:/etc/nginx/conf.d/
         ports:
             - "8080:80"
@@ -38,7 +38,6 @@ services:
         networks:
             - app-network
         volumes:
-            - dbdata:/var/lib/mysql
             - ./infra/mysql/my.cnf:/etc/mysql/my.cnf
         environment:
             MYSQL_DATABASE: reguleque
