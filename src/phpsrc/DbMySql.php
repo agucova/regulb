@@ -126,17 +126,21 @@ abstract class DbMySql
 
             // Create connection
             $config = new Config();
-            $conn = mysqli_connect(
-                $config->getParam("database", "servername"),
-                $config->getParam("database", "username"),
-                $config->getParam("database", "password"),
-                $config->getParam("database", "database")
-            );
+            // Check the environment for an RDS database. 
+            if ($_SERVER['RDS_HOSTNAME']) {
+                $conn = mysqli_connect($_SERVER['RDS_HOSTNAME'], $_SERVER['RDS_USERNAME'], $_SERVER['RDS_PASSWORD'], $_SERVER['RDS_DB_NAME'], $_SERVER['RDS_PORT']);
+            } else {
+                $conn = mysqli_connect(
+                    $config->getParam("database", "servername"),
+                    $config->getParam("database", "username"),
+                    $config->getParam("database", "password"),
+                    $config->getParam("database", "database")
+                );
+            }
             if (!$conn) {
                 $mensajeError = "ERROR DE CONEXION EN MyDbSql - HOLA!! ";
                 $mensajeError .= "[servername : " .  $config->getParam("database", "servername") . "]";
                 $mensajeError .= "[username : " .  $config->getParam("database", "username") . "]";
-                //$mensajeError .= "[password : " .  $config->getParam("database", "password") . "]";
                 $mensajeError .= "[database : " .  $config->getParam("database", "database") . "]";
                 $mensajeError .= "[error no : " . mysqli_connect_errno() . "]";
                 $mensajeError .= "[error : " . mysqli_connect_error() . "]";
