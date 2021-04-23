@@ -1,0 +1,13 @@
+{
+  "env": "development",
+  "development": {
+    "database": {
+      "servername": "db",
+      "username": "root",
+      "password": "reguleque",
+      "database": "reguleque",
+      "backup-path": "./db-backup/",
+      "loglevel": "debug"
+    }
+  }
+}
