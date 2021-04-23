@@ -21,6 +21,6 @@ jobs:
                   aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
                   application_name: regulb
                   environment_name: regulb-dev
-                  version_label: test
+                  version_label: ${{ github.event.commits[0].message }}
                   region: us-east-1
                   deployment_package: deploy.zip
