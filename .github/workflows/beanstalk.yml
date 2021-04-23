@@ -22,5 +22,5 @@ jobs:
                   application_name: regulb
                   environment_name: regulb-dev
                   version_label: test
-                  region: us-west-2
+                  region: us-east-1
                   deployment_package: deploy.zip
